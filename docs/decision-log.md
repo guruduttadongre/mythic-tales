@@ -112,5 +112,33 @@ between "AWS for infra" and "Vercel for the site."
 **Date:** Aug 2026
 
 ---
+## Decision: TTS voice — ElevenLabs ("Shardul") for English narration; Hindi/Kannada vendor deferred
 
+**Choice:** Use ElevenLabs, specifically the voice "Shardul," for the English
+narration of the flagship story. Voice selection is done per story, matched
+to that story's character/tone, rather than fixing one narrator voice for
+the whole catalog. The original brief called for an Indian female narrator
+voice; this was revised in favor of matching voice to character — a male,
+deep, calming voice suited the protagonist of this particular story.
+The Hindi/Kannada vendor choice is deliberately left open rather than
+defaulting to ElevenLabs across all languages — Sarvam remains a strong
+candidate for those languages and will be evaluated on its own merits
+(with an actual listening test) before final audio is generated.
+
+**Alternatives considered:** Sarvam AI for all languages (single vendor,
+purpose-built for Indian speech); ElevenLabs for all languages (single
+vendor, proven quality in English).
+
+**Why:** ElevenLabs demonstrated strong emotional range for English on the
+actual story text without heavy prompting. Rather than assuming that result
+carries over to Hindi/Kannada, or defaulting to Sarvam untested, the vendor
+decision for those languages is deferred to an evidence-based comparison —
+avoiding a decision made on assumption rather than a verified listen.
+
+**Trade-off accepted:** A potential two-vendor architecture (two API
+integrations, two billing sources) if Hindi/Kannada ultimately goes to
+Sarvam, in exchange for using the best-fit voice per language rather than
+forcing a single vendor across all three.
+
+**Date:** Aug 2026
 <!-- Add new entries above this line as decisions are made. -->
