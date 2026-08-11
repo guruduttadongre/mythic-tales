@@ -141,4 +141,22 @@ Sarvam, in exchange for using the best-fit voice per language rather than
 forcing a single vendor across all three.
 
 **Date:** Aug 2026
+
+## Decision: TTS model — Eleven v3 with audio tags, over Multilingual v2
+
+**Choice:** Generate narration using ElevenLabs' `eleven_v3` model with inline
+audio tags (e.g. `[nervous]`, `[determined]`, `[triumphant]`) placed at
+emotionally significant points in the text, rather than `eleven_multilingual_v2`
+with plain text.
+
+**What happened:** The first full-story generation was run using
+`eleven_multilingual_v2` with plain, untagged text — skipping the planned
+emotion-annotation step entirely. This produced usable but flat narration
+and cost real API credits for a version that didn't reflect the intended
+design. It was caught after listening to the output, not before generating
+it — a process gap, not a technical one. The story was regenerated correctly
+afterward using `eleven_v3` with audio tags, at additional credit cost.
+
+**Why v3 with tags is the right choice going forward:** v3 was purpose-built
+for expressive, performance-style
 <!-- Add new entries above this line as decisions are made. -->
