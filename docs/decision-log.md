@@ -182,4 +182,27 @@ automate this step.
 
 **Date:** Aug 2026
 
+## Decision: No custom domain; GitHub Pages as primary hosting, AWS as a documented exercise
+
+**Choice:** Do not purchase or manage a custom domain. Use GitHub Pages
+(free, using its default subdomain URL) as the sustainable, always-on way
+to share a working version of the site. Treat AWS hosting (S3, CloudFront,
+Lambda, Terraform) as a separate, documented build-and-tear-down exercise
+rather than a permanently running deployment.
+
+**Alternatives considered:** Purchasing a custom domain and running the
+site permanently on AWS.
+
+**Why:** A custom domain adds a recurring cost and a renewal obligation for
+a project that isn't intended to be actively maintained or expanded on an
+ongoing basis. GitHub Pages removes hosting cost and maintenance entirely
+while still providing a real, working, shareable link. Running AWS
+infrastructure as a one-time, documented exercise (rather than leaving it
+live indefinitely) still demonstrates the infrastructure/IaC work without
+the ongoing cost or operational burden of a project that isn't being
+actively grown. This also reflects a deliberate choice to keep the project's
+polish proportional to its actual scope — a small, honestly-labeled catalog
+does not need to look or run like a production product.
+
+**Date:** Aug 2026
 <!-- Add new entries above this line as decisions are made. -->
