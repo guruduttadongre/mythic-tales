@@ -159,4 +159,27 @@ afterward using `eleven_v3` with audio tags, at additional credit cost.
 
 **Why v3 with tags is the right choice going forward:** v3 was purpose-built
 for expressive, performance-style
+
+## Decision: Duplicate final audio/timing files into site/, separate from content/
+
+**Choice:** Keep `content/audio/` as the working area where audio is generated
+(including intermediate files like tagged text and raw timestamps), and copy
+only the final MP3 and sentence-timing JSON into `site/audio/`, which the
+website actually references and serves.
+
+**Why:** Local testing revealed that a web server only serves files within
+its own root folder — `site/` cannot reach up into `content/` at runtime.
+This also anticipates deployment: the eventual hosted site will be whatever
+gets uploaded as its own self-contained unit, with no access to files
+outside it. Keeping `content/` as the working/source area and `site/` as
+the deployable output keeps that separation intentional rather than
+accidental.
+
+**Trade-off accepted:** Regenerating a story's audio requires manually
+re-copying the updated files into `site/audio/`, or the live site will
+keep serving a stale version. A small sync script may be added later to
+automate this step.
+
+**Date:** Aug 2026
+
 <!-- Add new entries above this line as decisions are made. -->
