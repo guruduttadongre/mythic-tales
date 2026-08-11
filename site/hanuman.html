@@ -15,16 +15,31 @@
 
   <main class="story-player">
 
+    <div class="flourish flourish--top" aria-hidden="true">
+      <svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 10 Q 25 0, 50 10 T 100 10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+
     <button id="play-button" class="play-button" aria-label="Play story">
       ▶ Play story
     </button>
+
+    <div class="progress-bar-track" id="progress-bar-track">
+      <div class="progress-bar-fill" id="progress-bar-fill"></div>
+    </div>
 
     <audio id="story-audio" src="audio/hanuman-leap-of-faith-en.mp3"></audio>
 
     <div id="story-text" class="story-text"></div>
 
-  </main>
+    <div class="flourish flourish--bottom" aria-hidden="true">
+      <svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 10 Q 25 20, 50 10 T 100 10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
 
+  </main>
   <script src="js/player.js"></script>
 </body>
 </html>

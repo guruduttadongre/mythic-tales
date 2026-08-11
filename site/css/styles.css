@@ -1,5 +1,6 @@
 :root {
   --color-bg: #FDFBF7;
+  --mood-bg: #FDFBF7;
   --color-text: #2C2420;
   --color-text-muted: #8A8078;
   --color-terracotta: #D85A30;
@@ -15,10 +16,11 @@
 
 body {
   margin: 0;
-  background: var(--color-bg);
+  background: var(--mood-bg);
   color: var(--color-text);
   font-family: var(--font-body);
   line-height: 1.6;
+  transition: background-color 2s ease;
 }
 
 .site-header {
@@ -92,4 +94,126 @@ body {
 
 .story-card--coming-soon h2 {
   color: var(--color-text-muted);
+}
+
+/* ===== Story page ===== */
+
+.story-header {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 1rem;
+}
+
+.back-link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.back-link:hover {
+  color: var(--color-terracotta);
+}
+
+.story-header h1 {
+  font-family: var(--font-heading);
+  font-weight: normal;
+  font-size: 1.8rem;
+  margin: 0.75rem 0 0;
+}
+
+.story-player {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+  text-align: center;
+}
+
+/* Decorative wave flourishes */
+.flourish {
+  color: var(--color-terracotta-light);
+  width: 100px;
+  margin: 0 auto;
+}
+
+.flourish--top {
+  margin-bottom: 1.5rem;
+}
+
+.flourish--bottom {
+  margin-top: 2.5rem;
+}
+
+/* Play button */
+.play-button {
+  background: var(--color-terracotta);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.play-button:hover {
+  opacity: 0.9;
+}
+
+.play-button:active {
+  transform: scale(0.97);
+}
+
+/* Hide the native audio element - we use our own progress bar */
+#story-audio {
+  display: none;
+}
+
+/* Custom progress bar */
+.progress-bar-track {
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 999px;
+  margin: 1.25rem auto 0;
+  max-width: 320px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--color-terracotta);
+  border-radius: 999px;
+  transition: width 0.2s linear;
+}
+
+/* Story text */
+.story-text {
+  text-align: left;
+  margin-top: 2.5rem;
+  font-size: 1.1rem;
+  line-height: 1.85;
+}
+
+.story-text p {
+  margin: 0 0 1.25rem;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fade-in-up 0.6s ease forwards;
+}
+
+@keyframes fade-in-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.story-text p:first-of-type::first-letter {
+  font-family: var(--font-heading);
+  font-size: 2.6rem;
+  float: left;
+  line-height: 0.85;
+  padding-right: 0.4rem;
+  padding-top: 0.15rem;
+  color: var(--color-terracotta);
 }
