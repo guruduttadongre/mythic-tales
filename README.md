@@ -32,4 +32,13 @@ Content generation happens **offline, in advance** — nothing is generated live
 
 ## Tech stack
 
+## Tech stack
+
+**In use:**
 Plain HTML/CSS/JS · ElevenLabs (text-to-speech) · GitHub Actions (CI/CD) · GitHub Pages (hosting)
+
+**Built with the help of:**
+Claude (Anthropic) —  story drafting/tagging, and pair-programming throughout this build
+
+**Planned:**
+OpenAI API — automated story generation, emotion tagging, and thumbnail image generation in the upcoming automation pipeline
