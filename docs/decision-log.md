@@ -205,4 +205,25 @@ polish proportional to its actual scope — a small, honestly-labeled catalog
 does not need to look or run like a production product.
 
 **Date:** Aug 2026
+
+## Decision: Semi-automated content pipeline with mandatory human approval gate
+
+**Choice:** Automate the story-generation pipeline (tagging, TTS, timestamp
+generation, page build, deployment) using GitHub Actions, but require an
+explicit human approval step between automated tag generation and audio
+generation/publishing, using GitHub's environment protection rules.
+
+**Alternatives considered:** Fully automated pipeline with no human review
+of LLM-generated tags before publishing.
+
+**Why:** Automating tag generation introduces an LLM step with no guarantee
+of its output — since the site is intended for children, there is a real
+risk that unintended or inappropriate content could be generated and
+published without anyone reviewing it first. A mandatory approve/reject
+checkpoint keeps a human as the final gate on what a child can access,
+preserving the project's original two-phase design principle (every word a
+child hears is reviewed before it's ever generated) even as the surrounding
+process is automated.
+
+**Date:** Aug 2026
 <!-- Add new entries above this line as decisions are made. -->
