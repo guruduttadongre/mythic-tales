@@ -63,6 +63,12 @@ body {
   background-color: var(--color-terracotta-light);
 }
 
+.story-card__image--hanuman {
+  background-image: url('../images/hanuman_img.png');
+  background-size: cover;
+  background-position: center;
+}
+
 .story-card__image--placeholder {
   background-color: var(--color-border);
 }
@@ -126,6 +132,18 @@ body {
   margin: 0 auto;
   padding: 0 1.5rem 5rem;
   text-align: center;
+  position: relative;
+}
+
+.story-player::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url('../images/hanuman_img.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08;
+  z-index: -1;
 }
 
 /* Decorative wave flourishes */
