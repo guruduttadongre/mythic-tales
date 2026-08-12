@@ -26,6 +26,12 @@ playButton.addEventListener("click", () => {
   }
 });
 
+audio.addEventListener("error", () => {
+  playButton.disabled = true;
+  playButton.textContent = "⚠ Audio unavailable — please refresh";
+  storyTextDiv.innerHTML = "<p>Sorry, the story couldn't load right now. Try refreshing the page.</p>";
+});
+
 // --- Reveal sentences as playback reaches their start time ---
 const progressFill = document.getElementById("progress-bar-fill");
 audio.addEventListener("timeupdate", () => {
