@@ -1,0 +1,75 @@
+name: Generate Story Draft
+
+on:
+  workflow_dispatch:
+    inputs:
+      theme:
+        description: 'Story theme or character'
+        required: true
+        type: string
+      word_count:
+        description: 'Approximate word count'
+        required: true
+        default: '600'
+        type: string
+      context:
+        description: 'Additional context, tone, or focus for the story'
+        required: false
+        type: string
+      age_range:
+        description: 'Target age range'
+        required: true
+        default: '6-10 years'
+        type: string
+      source_epic:
+        description: 'Source epic or text (e.g. Ramayana, Mahabharata, Puranas)'
+        required: true
+        default: 'Puranas'
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate-draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate story draft
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          STORY_THEME: ${{ inputs.theme }}
+          STORY_WORD_COUNT: ${{ inputs.word_count }}
+          STORY_CONTEXT: ${{ inputs.context }}
+          STORY_AGE_RANGE: ${{ inputs.age_range }}
+          STORY_SOURCE_EPIC: ${{ inputs.source_epic }}
+        run: python3 scripts/generate_story.py
+
+      - name: Open pull request for review
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "content: draft story - ${{ inputs.theme }}"
+          branch: "draft-story/${{ github.run_id }}"
+          title: "Story draft: ${{ inputs.theme }}"
+          body: |
+            Automated story draft for review.
+
+            **Theme:** ${{ inputs.theme }}
+            **Source:** ${{ inputs.source_epic }}
+            **Age range:** ${{ inputs.age_range }}
+            **Target word count:** ${{ inputs.word_count }}
+            **Context given:** ${{ inputs.context }}
+
+            Review the draft below. Edit directly in this PR if needed, then merge to approve and continue the pipeline, or close this PR to reject.
+          labels: story-draft
