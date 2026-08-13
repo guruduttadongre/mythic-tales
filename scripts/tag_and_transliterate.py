@@ -116,8 +116,14 @@ proposed_names = result.get("proposed_names", {})
 slug = os.path.basename(draft_path).replace(".md", "")
 final_path = f"content/{slug}.md"
 
+# Remove any existing status: line before adding the new one
+frontmatter_clean = re.sub(r"\nstatus:.*", "", frontmatter_text)
+
+# Remove any existing status: line before adding the new one
+frontmatter_clean = re.sub(r"\nstatus:.*", "", frontmatter_text)
+
 with open(final_path, "w", encoding="utf-8") as f:
-    f.write(f"---\n{frontmatter_text}\nstatus: tagged\n---\n\n{tagged_text}")
+    f.write(f"---\n{frontmatter_clean}\nstatus: tagged\n---\n\n{tagged_text}")
 
 os.remove(draft_path)
 print(f"Tagged story saved to {final_path}, removed from drafts.")

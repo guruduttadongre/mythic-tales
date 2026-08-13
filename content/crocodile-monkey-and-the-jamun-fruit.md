@@ -2,7 +2,6 @@
 title: Crocodile, monkey and the jamun fruit
 source: Indian folklore and kids stories
 age_range: 6-10 years
-status: draft
 status: tagged
 ---
 
