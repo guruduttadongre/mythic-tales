@@ -226,4 +226,18 @@ child hears is reviewed before it's ever generated) even as the surrounding
 process is automated.
 
 **Date:** Aug 2026
+
+## Decision: Story generation as the first automated pipeline stage
+
+**Choice:** Built a GitHub Actions workflow (`generate-story.yml`), triggered
+manually via `workflow_dispatch` with a form (theme, word count, context,
+age range, source epic). It calls the OpenAI API to draft a story and opens
+a pull request for human review, rather than committing directly to main.
+
+**Why:** Matches the human-in-the-loop principle established earlier -
+AI-generated content is never trusted directly into the live site. The PR
+mechanism was chosen specifically because it allows direct in-browser
+editing of the draft before approval, not just a binary accept/reject.
+
+**Date:** Aug 2026
 <!-- Add new entries above this line as decisions are made. -->
