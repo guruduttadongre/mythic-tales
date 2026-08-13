@@ -1,0 +1,63 @@
+name: Tag and Transliterate Story
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/drafts/**'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  tag-story:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Identify changed draft file
+        id: find-draft
+        run: |
+          FILE=$(git diff --name-only --diff-filter=A ${{ github.event.before }} ${{ github.event.after }} -- content/drafts/ | head -1)
+          if [ -z "$FILE" ]; then
+            echo "No newly added draft file found in this push."
+            exit 1
+          fi
+          echo "Found draft: $FILE"
+          echo "draft_file=$FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Tag and transliterate
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DRAFT_FILE: ${{ steps.find-draft.outputs.draft_file }}
+        run: python3 scripts/tag_and_transliterate.py
+
+      - name: Open pull request for review
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "content: tag and transliterate story"
+          branch: "tag-story/${{ github.run_id }}"
+          title: "Story tagging + pronunciation review"
+          body: |
+            Automated emotion tagging and pronunciation review.
+
+            Review the tagged story text below. Also check
+            `content/proposed-pronunciations.json` for newly proposed
+            name pronunciations - these are NOT yet added to
+            `content/pronunciation-map.json`. If you want to approve them,
+            add them to the map file yourself before or after merging.
+
+            Merge to approve and continue the pipeline, or close to reject.
+          labels: story-tagging
