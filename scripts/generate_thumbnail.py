@@ -25,8 +25,8 @@ title = title_match.group(1).strip() if title_match else "Untitled story"
 VISUAL_OVERRIDE = os.environ.get("VISUAL_OVERRIDE", "").strip()
 
 STYLE_GUIDE = (
-    "A warm, richly detailed children's story illustration rendered in "
-    "a realistic style with full, natural, vibrant colors - not flat, "
+    "A richly detailed children's story illustration rendered in "
+    "a cinematic style with full, natural, vibrant colors - not flat, "
     "not cartoonish, not monochrome. Soft, cinematic lighting with warm "
     "ambient tones. Characters have realistic proportions and expressive "
     "detail. Detailed, atmospheric backgrounds with genuine depth and "
