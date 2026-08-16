@@ -34,15 +34,28 @@ print(f"Story: {title}")
 print(f"Source: {source} -> matched category: {category}")
 print(f"Selected voice: {voice_name} ({voice_id})")
 
+# --- Clean markdown formatting before narration (asterisks, separators) ---
+clean_story_text = story_text.replace("---", " ")
+clean_story_text = re.sub(r"\*\*(.*?)\*\*", r"\1", clean_story_text)  # **bold** -> bold
+clean_story_text = re.sub(r"\s+", " ", clean_story_text).strip()
+
 # --- Apply Devanagari pronunciation substitutions ---
 with open("content/pronunciation-map.json", "r", encoding="utf-8") as f:
     pronunciation_map = json.load(f)
 
-narration_text = story_text
+narration_text = clean_story_text
 for english_name, devanagari in pronunciation_map.items():
     narration_text = re.sub(rf"\b{re.escape(english_name)}\b", devanagari, narration_text)
 
 print(f"Prepared narration text ({len(narration_text)} characters). Sending to ElevenLabs (eleven_v3)...")
+
+# Save the exact narration text sent to the API, so the timing script
+# can match against it directly rather than reconstructing it later
+slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
+os.makedirs("content/audio", exist_ok=True)
+narration_text_path = f"content/audio/{slug}-en-final-text.txt"
+with open(narration_text_path, "w", encoding="utf-8") as f:
+    f.write(narration_text)
 
 # --- Call ElevenLabs ---
 url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/with-timestamps"
@@ -66,11 +79,8 @@ if response.status_code != 200:
 
 data = response.json()
 
-slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
 output_audio = f"content/audio/{slug}-en.mp3"
 output_timestamps = f"content/audio/{slug}-en-timestamps.json"
-
-os.makedirs("content/audio", exist_ok=True)
 audio_bytes = base64.b64decode(data["audio_base64"])
 with open(output_audio, "wb") as f:
     f.write(audio_bytes)
