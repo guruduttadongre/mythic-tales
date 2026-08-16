@@ -27,9 +27,7 @@ VISUAL_OVERRIDE = os.environ.get("VISUAL_OVERRIDE", "").strip()
 STYLE_GUIDE = (
     "A warm, richly detailed children's story illustration rendered in "
     "a realistic, cinematic style with full, natural, vibrant colors - "
-    "not flat, not cartoonish, not monochrome. Dramatic, warm lighting "
-    "(golden hour, soft rim lighting, gentle glows) to create a genuine "
-    "sense of wonder and atmosphere. Characters have realistic "
+    "not flat, not cartoonish, not monochrome. Characters have realistic "
     "proportions and expressive, emotive detail. Rich, atmospheric "
     "backgrounds with real depth and texture. "
     "IMPORTANT: even for dramatic or intense story moments, the mood "
