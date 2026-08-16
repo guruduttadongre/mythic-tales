@@ -1,0 +1,77 @@
+name: Publish Story (Audio, Page, Homepage)
+
+on:
+  workflow_dispatch:
+    inputs:
+      story_file:
+        description: 'Path to the story file (e.g. content/crocodile-monkey-and-the-jamun-fruit.md)'
+        required: true
+        type: string
+      voice_stability:
+        description: 'ElevenLabs voice stability (0.0 = most expressive, 1.0 = most consistent)'
+        required: true
+        default: '0.0'
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  publish-story:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate audio
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          STORY_FILE: ${{ inputs.story_file }}
+          VOICE_STABILITY: ${{ inputs.voice_stability }}
+        run: python3 scripts/generate_audio_pipeline.py
+
+      - name: Build sentence timings
+        env:
+          STORY_FILE: ${{ inputs.story_file }}
+        run: python3 scripts/build_sentence_timings_pipeline.py
+
+      - name: Generate story page
+        env:
+          STORY_FILE: ${{ inputs.story_file }}
+        run: python3 scripts/generate_story_page.py
+
+      - name: Update homepage
+        env:
+          STORY_FILE: ${{ inputs.story_file }}
+        run: python3 scripts/update_homepage.py
+
+      - name: Copy final assets into site/
+        run: |
+          mkdir -p site/audio
+          SLUG=$(basename "${{ inputs.story_file }}" .md)
+          cp "content/audio/${SLUG}-en.mp3" site/audio/
+          cp "content/audio/${SLUG}-en-sentences.json" site/audio/
+
+      - name: Open pull request for final review
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "content: publish story - ${{ inputs.story_file }}"
+          branch: "publish-story/${{ github.run_id }}"
+          title: "Final review: publish story"
+          body: |
+            Final pre-publish review. This PR includes the generated audio,
+            the new story page, and the homepage update.
+
+            Listen to the audio directly in this PR before merging. Merge
+            to publish live. Close to reject - nothing here reaches the
+            live site until merged.
+          labels: publish-review
