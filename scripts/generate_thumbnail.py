@@ -25,15 +25,20 @@ title = title_match.group(1).strip() if title_match else "Untitled story"
 VISUAL_OVERRIDE = os.environ.get("VISUAL_OVERRIDE", "").strip()
 
 STYLE_GUIDE = (
-    "A richly detailed children's story illustration rendered in "
-    "a cinematic style with full, natural, vibrant colors - not flat, "
-    "not cartoonish, not monochrome. Soft, cinematic lighting with warm "
-    "ambient tones. Characters have realistic proportions and expressive "
-    "detail. Detailed, atmospheric backgrounds with genuine depth and "
-    "texture (foliage, water, environmental storytelling elements as "
-    "relevant to the scene). Clear focal point with a strong sense of "
-    "atmosphere and wonder. No text in the image. Wide landscape "
-    "composition."
+    "A warm, richly detailed children's story illustration rendered in "
+    "a realistic, cinematic style with full, natural, vibrant colors - "
+    "not flat, not cartoonish, not monochrome. Dramatic, warm lighting "
+    "(golden hour, soft rim lighting, gentle glows) to create a genuine "
+    "sense of wonder and atmosphere. Characters have realistic "
+    "proportions and expressive, emotive detail. Rich, atmospheric "
+    "backgrounds with real depth and texture. "
+    "IMPORTANT: even for dramatic or intense story moments, the mood "
+    "must stay gentle, reverent, and awe-inspiring rather than violent, "
+    "frightening, or dark - no menacing figures, no visible fire/danger, "
+    "no chaos or struggle. Favor calm, soft-focus, or distant treatment "
+    "of any intense story elements rather than depicting them directly. "
+    "Clear focal point with cinematic depth of field. No text in the "
+    "image. Wide landscape composition."
 )
 
 story_for_image = re.sub(r"\[.*?\]", "", story_text).strip()
