@@ -25,16 +25,15 @@ title = title_match.group(1).strip() if title_match else "Untitled story"
 VISUAL_OVERRIDE = os.environ.get("VISUAL_OVERRIDE", "").strip()
 
 STYLE_GUIDE = (
-    "A warm, richly detailed children's storybook illustration in the "
-    "style of a classic hand-painted picture book. Full, natural color "
-    "palette with soft golden-hour lighting and warm ambient tones. "
-    "Characters have expressive, semi-realistic proportions - not overly "
-    "flat or geometric. Detailed, atmospheric backgrounds with texture "
-    "and depth (foliage, water reflections, environmental storytelling "
-    "elements as relevant to the scene). Gentle, painterly rendering "
-    "rather than sharp vector-style outlines. Clear focal point with a "
-    "sense of warmth, wonder, and atmosphere. No text in the image. "
-    "Wide landscape composition."
+    "A warm, richly detailed children's story illustration rendered in "
+    "a realistic style with full, natural, vibrant colors - not flat, "
+    "not cartoonish, not monochrome. Soft, cinematic lighting with warm "
+    "ambient tones. Characters have realistic proportions and expressive "
+    "detail. Detailed, atmospheric backgrounds with genuine depth and "
+    "texture (foliage, water, environmental storytelling elements as "
+    "relevant to the scene). Clear focal point with a strong sense of "
+    "atmosphere and wonder. No text in the image. Wide landscape "
+    "composition."
 )
 
 story_for_image = re.sub(r"\[.*?\]", "", story_text).strip()
