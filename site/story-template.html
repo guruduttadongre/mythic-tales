@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} — Mythic Tales</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+
+  <meta property="og:title" content="{{TITLE}} — Mythic Tales">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta property="og:image" content="https://guruduttadongre.github.io/mythic-tales/images/{{IMAGE_FILE}}">
+  <meta property="og:url" content="https://guruduttadongre.github.io/mythic-tales/{{SLUG}}.html">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{TITLE}} — Mythic Tales">
+  <meta name="twitter:description" content="{{DESCRIPTION}}">
+  <meta name="twitter:image" content="https://guruduttadongre.github.io/mythic-tales/images/{{IMAGE_FILE}}">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <noscript>
+    <p style="text-align: center; padding: 2rem;">This story needs JavaScript enabled in your browser to play.</p>
+  </noscript>
+
+  <header class="story-header">
+    <a href="index.html" class="back-link">← Back to stories</a>
+    <h1>{{TITLE}}</h1>
+  </header>
+
+  <main class="story-player">
+
+    <div class="flourish flourish--top" aria-hidden="true">
+      <svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 10 Q 25 0, 50 10 T 100 10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <button id="play-button" class="play-button" aria-label="Play story">
+      ▶ Play story
+    </button>
+
+    <div class="progress-bar-track" id="progress-bar-track">
+      <div class="progress-bar-fill" id="progress-bar-fill"></div>
+    </div>
+
+    <audio id="story-audio" src="audio/{{AUDIO_FILE}}"></audio>
+
+    <div id="story-text" class="story-text"></div>
+
+    <div class="flourish flourish--bottom" aria-hidden="true">
+      <svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 10 Q 25 20, 50 10 T 100 10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+  </main>
+
+  <script src="js/player-template.js"></script>
+</body>
+</html>
