@@ -12,6 +12,11 @@ on:
         required: true
         default: '0.0'
         type: string
+      use_pronunciation_map:
+        description: 'Apply Devanagari pronunciation substitutions?'
+        required: true
+        default: 'false'
+        type: boolean
 
 permissions:
   contents: write
@@ -37,6 +42,7 @@ jobs:
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           STORY_FILE: ${{ inputs.story_file }}
           VOICE_STABILITY: ${{ inputs.voice_stability }}
+          USE_PRONUNCIATION_MAP: ${{ inputs.use_pronunciation_map }}
         run: python3 scripts/generate_audio_pipeline.py
 
       - name: Build sentence timings

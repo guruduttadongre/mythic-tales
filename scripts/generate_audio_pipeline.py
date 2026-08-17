@@ -39,13 +39,18 @@ clean_story_text = story_text.replace("---", " ")
 clean_story_text = re.sub(r"\*\*(.*?)\*\*", r"\1", clean_story_text)  # **bold** -> bold
 clean_story_text = re.sub(r"\s+", " ", clean_story_text).strip()
 
-# --- Apply Devanagari pronunciation substitutions ---
-with open("content/pronunciation-map.json", "r", encoding="utf-8") as f:
-    pronunciation_map = json.load(f)
+# --- Apply Devanagari pronunciation substitutions (optional, toggleable) ---
+USE_PRONUNCIATION_MAP = os.environ.get("USE_PRONUNCIATION_MAP", "false").lower() == "true"
 
 narration_text = clean_story_text
-for english_name, devanagari in pronunciation_map.items():
-    narration_text = re.sub(rf"\b{re.escape(english_name)}\b", devanagari, narration_text)
+if USE_PRONUNCIATION_MAP:
+    with open("content/pronunciation-map.json", "r", encoding="utf-8") as f:
+        pronunciation_map = json.load(f)
+    for english_name, devanagari in pronunciation_map.items():
+        narration_text = re.sub(rf"\b{re.escape(english_name)}\b", devanagari, narration_text)
+    print("Pronunciation map substitutions applied.")
+else:
+    print("Pronunciation map substitutions skipped (USE_PRONUNCIATION_MAP not set to true).")
 
 print(f"Prepared narration text ({len(narration_text)} characters). Sending to ElevenLabs (eleven_v3)...")
 
