@@ -1,12 +1,12 @@
 {
   "epic": {
-    "name": "Shardul",
-    "voice_id": "KlhjbO6ojVZPbMdaYohO",
+    "name": "Keshavi",
+    "voice_id": "lHfFvRpJdoR0FStenmrc",
     "matches_sources": ["Ramayana", "Mahabharata"]
   },
   "puranic": {
-    "name": "Viraj",
-    "voice_id": "1U02n4nD6AdIZ9CjF053",
+    "name": "Keshavi",
+    "voice_id": "lHfFvRpJdoR0FStenmrc",
     "matches_sources": ["Puranas", "Purana", "Bhagavata Purana", "Vishnu Purana", "Shiva Purana"]
   },
   "folklore": {
