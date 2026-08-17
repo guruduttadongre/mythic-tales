@@ -241,3 +241,129 @@ editing of the draft before approval, not just a binary accept/reject.
 
 **Date:** Aug 2026
 <!-- Add new entries above this line as decisions are made. -->
+## Decision: Automated pipeline architecture with human approval at every AI-touched stage
+
+**Choice:** Built a four-stage automated content pipeline using GitHub
+Actions and pull requests as the review mechanism: (1) story generation
+from a theme/context form, (2) emotion tagging and name-pronunciation
+proposal, (3) thumbnail image generation, (4) final audio/page/homepage
+build. Each stage opens its own pull request; nothing proceeds to the
+next stage or reaches the live site without an explicit merge decision.
+The final stage is deliberately kept manually-triggered (not fully
+automatic) so it can be observed and debugged directly while still being
+validated.
+
+**Why:** Automating tag generation, image generation, and story drafting
+all introduce AI outputs with no inherent guarantee of quality or
+appropriateness - given the site is for children, an explicit human
+checkpoint before each stage's output is used stays a non-negotiable
+part of the design, even as the mechanical process around it is fully
+automated. Using pull requests (rather than a custom approval UI) means
+review, direct editing, and rejection are all native, well-understood
+GitHub actions - no additional tooling required.
+
+**Date:** Aug 2026
+
+---
+
+## Decision: Voice registry - collapsed from three category-matched voices to one
+
+**Choice:** Originally built a voice-selection scheme matching three
+ElevenLabs voices to story categories (Shardul for Ramayana/Mahabharata,
+Viraj for Puranas, Keshavi for folklore/default). After testing a
+Puranic story with Viraj, his performance under eleven_v3 sounded less
+authentically Indian-accented than expected, even before testing with
+corrected pronunciation data. Keshavi was tested directly against the
+same names and handled Indian pronunciation and accent naturally,
+without needing Devanagari pronunciation assistance at all. Based on
+this, the registry was changed so all three categories point to Keshavi,
+rather than keeping three distinct voices.
+
+**Alternatives considered:** Testing Viraj again with the corrected
+pronunciation map before deciding; keeping a multi-voice registry with
+a different second/third voice.
+
+**Why:** Once Keshavi was shown to handle names and accent well without
+extra help, on both an epic-toned excerpt and a Puranic story, using a
+single reliable voice was preferred over maintaining voice-specific
+quality differences and per-voice pronunciation dependencies. The
+registry structure itself was kept intact (not deleted) so a different
+voice can be reintroduced for a specific category later without
+re-architecting the selection logic.
+
+**Date:** Aug 2026
+
+---
+
+## Decision: Devanagari pronunciation substitution made an optional toggle, default off
+
+**Choice:** The pronunciation-map substitution step (replacing English
+spellings of Indian names with Devanagari before sending text to TTS)
+is now controlled by a toggle (USE_PRONUNCIATION_MAP, default false)
+rather than always running.
+
+**Why:** This step was originally required because earlier voices
+(Shardul, Viraj) produced noticeably better pronunciation with
+Devanagari assistance. Keshavi, the now-default voice, performs well
+without it. Rather than removing the substitution capability outright,
+it was kept as an optional, per-run toggle - preserving the option to
+re-enable it if a future voice needs it, without carrying its
+maintenance overhead (reviewing and merging proposed names) by default.
+
+**Date:** Aug 2026
+
+---
+
+## Decision: Thumbnail style guide evolved through three iterations
+
+**Choice:** The default AI-image style guide changed twice during
+testing: (1) flat/minimal illustration matching the site's original
+CSS aesthetic, (2) a richly detailed painterly picture-book style after
+the flat version felt visually underwhelming, (3) a photorealistic,
+cinematic style after direct feedback that painterly still didn't match
+the desired quality bar. The final version explicitly includes
+child-safety guardrails in the prompt itself (avoid horror, gore,
+frightening imagery, violence - favor calm/reverent treatment of
+dramatic story moments) after an early realistic-style test produced an
+image with intense, inappropriate elements (a demon army, fire, violent
+imagery) for a children's story.
+
+**Why:** Visual style was refined based on direct, iterative comparison
+rather than settled on first attempt - consistent with the project's
+overall practice of testing before committing to a default. The safety
+language was added as a permanent, structural part of the prompt (not
+a one-off fix) after a real instance of it being needed, so future
+dramatic story moments do not require manual catching each time.
+
+**Date:** Aug 2026
+
+---
+
+## Note: A few automation issues found and fixed during live testing
+
+- Workflow permissions: repo defaulted to read-only Actions
+  permissions with PR-creation disabled; both had to be manually
+  enabled in Settings before any pipeline stage could open a pull
+  request, despite the workflow files themselves declaring correct
+  permissions.
+- Tagging workflow fires on file deletion too: the tag-story
+  workflow's trigger (paths: content/drafts/**) cannot distinguish an
+  added file from a deleted one - merging a tagging PR (which deletes
+  the promoted draft) re-triggers the same workflow, which then fails
+  loudly since there's nothing new to process. Not harmful (no incorrect
+  PR is opened), but noisy; worth a future fix to exit cleanly instead
+  of erroring.
+- Stage ordering dependency: the final publish stage assumes a
+  story's thumbnail image already exists on main. If the thumbnail
+  PR hasn't been merged yet, publishing proceeds anyway and produces a
+  page/homepage referencing a nonexistent image file. Currently handled
+  by manual ordering discipline (merge thumbnail PR before publish PR),
+  not enforced by the pipeline itself.
+- Automated proposal step was initially too conservative: the
+  tagging stage's proper-noun detection skipped names it judged as
+  "common enough" (e.g. Shiva, Amrita, Devas, Asuras), leaving them
+  unconverted and contributing to a pronunciation issue. The prompt was
+  rewritten to be exhaustive rather than selective.
+
+**Date:** Aug 2026
+<!-- Add new entries above this line as decisions are made. -->
