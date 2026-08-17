@@ -53,11 +53,21 @@ significant emotional moments in the story. Use them sparingly - only at
 real shifts, not every sentence. Do not change any of the story's actual
 words.
 
-Task 2 - Identify names needing pronunciation help: List any proper nouns
-(character names, place names) in the story that are Sanskrit/Hindi-origin
-and would benefit from a Devanagari spelling to guide correct pronunciation
-by an English-speaking AI voice. Do NOT include names already in this
-known list: {known_names}
+Task 2 - Identify EVERY Indian proper noun in the story: Be exhaustive,
+not selective. Scan the ENTIRE story text and list every single proper
+noun that is Sanskrit, Hindi, or otherwise Indian-language in origin -
+this includes:
+- All character/deity names (e.g. Shiva, Rama, Krishna)
+- All place names (e.g. Kailash, Lanka, Vrindavan)
+- All object/concept names specific to Indian mythology (e.g. Amrita)
+- Any collective/group nouns of Indian origin (e.g. Devas, Asuras, Rakshasas)
+- Titles or epithets if Indian-language origin (e.g. Mahadev)
+
+Do NOT filter these based on whether you think English speakers already
+know the word or whether it "needs help" - include every single Indian-
+origin proper noun found, no matter how common you believe it to be.
+Being over-inclusive is correct; being selective is a failure of this
+task. Do NOT include names already in this known list: {known_names}
 
 Respond ONLY with valid JSON in this exact structure, nothing else:
 {{
