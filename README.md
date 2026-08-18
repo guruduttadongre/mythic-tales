@@ -24,6 +24,11 @@ Each story is adapted from Indian mythology and folklore, narrated by an AI voic
 
 Content generation happens **offline, in advance** — nothing is generated live when a visitor uses the site. A visitor only ever streams pre-generated, pre-reviewed audio, images, and static pages. See the [decision log](docs/decision-log.md) for the full architecture reasoning, including a few honest mistakes made and fixed along the way.
 
+## Managing the catalog
+
+- **Taking a story down**: a `workflow_dispatch` GitHub Actions workflow archives a story's page, audio, and thumbnail into `content/archive/` and reverts its homepage card to "Coming soon" — nothing is permanently deleted, so a takedown is fully reversible.
+- **Expanding the catalog**: a small script appends additional "Coming soon" placeholder slots to the homepage grid, so the catalog's visible capacity can grow independently of publishing new stories.
+
 ## What's planned
 
 - Additional stories in the catalog
@@ -41,4 +46,4 @@ Content generation happens **offline, in advance** — nothing is generated live
 Plain HTML/CSS/JS · ElevenLabs (text-to-speech) · OpenAI API (story generation, tagging, image generation) · GitHub Actions (CI/CD and content pipeline orchestration) · GitHub Pages (hosting)
 
 **Built with the help of:**
-Claude (Anthropic) —  with all architecture and AI-governance decisions human-moderated and approved throughout this build
+Claude (Anthropic) — architecture design and implementation, with all architecture and AI-governance decisions human-moderated and approved throughout this build

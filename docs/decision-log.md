@@ -366,4 +366,25 @@ dramatic story moments do not require manual catching each time.
   rewritten to be exhaustive rather than selective.
 
 **Date:** Aug 2026
+
+## Note: Bot-authenticated pushes don't trigger downstream workflows by default
+
+The takedown workflow initially committed and pushed directly to `main`
+using the default GITHUB_TOKEN (via actions/checkout's default
+authentication). This push succeeded, but did not trigger the
+"Deploy to GitHub Pages" workflow, even though that workflow's trigger
+(push to main) should have matched. This is a deliberate GitHub Actions
+safeguard against infinite workflow loops - pushes authenticated with the
+default token do not fire other workflows.
+
+**Fix:** created a personal access token (WORKFLOW_PAT), stored as an
+Actions secret, and passed it explicitly to actions/checkout's `token`
+input in the takedown workflow. Pushes made with this token are
+attributed to the user's own account and correctly trigger downstream
+workflows. Confirmed via a real restore-and-retest cycle (no data lost -
+the archived files from the first, non-cascading takedown were simply
+moved back into place before re-running).
+
+**Date:** Aug 2026
+
 <!-- Add new entries above this line as decisions are made. -->
