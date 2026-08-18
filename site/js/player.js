@@ -2,6 +2,9 @@ const playButton = document.getElementById("play-button");
 const audio = document.getElementById("story-audio");
 const storyTextDiv = document.getElementById("story-text");
 
+// --- Set the background watermark image for this story ---
+document.documentElement.style.setProperty("--story-bg-image", "url('../images/hanuman_img.png')");
+
 let sentences = [];
 let nextSentenceIndex = 0;
 
